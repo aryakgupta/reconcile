@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="view_bulk_order_import_form" model="ir.ui.view">
+			<field name="name">Bulk Order Import</field>
+			<field name="model">bulk.order.import</field>
+			<field name="arch" type="xml">
+				<form string="Bulk Order Import">
+					<separator colspan="4" string="This wizard will Import the bulk details of Order/Return/Transaction."/>
+					<field name="csv_file"/>
+					<group>		
+						<group>		
+							<field name="market_place_id" widget="selection" />
+							<field name="vendor_place_id" widget="selection" />
+							<field name="password" password="True" />	
+						</group>
+						<group>
+						</group>
+					</group>				
+					<separator colspan="4"/>
+					<group colspan="2" col="4">
+						<notebook>
+							<page string="Bulk Import Options">
+								<button name="action_upload_order" string="Upload Order" type="object" />
+								<button name="action_return_delivery" string="Upload Return Delivery" type="object" />
+								<button name="action_upload_transaction" string="Upload Transaction" type="object" />
+							</page>
+						</notebook>		
+					</group>			
+			       	<footer>
+                        <button special="cancel" string="Cancel" />
+                    </footer>
+                										
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_bulk_order_import">
+			<field name="name">Import Orders</field>
+			<field name="res_model">bulk.order.import</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<!-- <field name="view_id ref="view_import_payroll_recurring"/> -->
+			<field name="target">new</field>
+		</record>
+		<menuitem name="Import Orders" id="menu_bulk_order_import" parent="menu_main_seller_order"
+			action="action_bulk_order_import" sequence="200"/>
+
+</odoo>

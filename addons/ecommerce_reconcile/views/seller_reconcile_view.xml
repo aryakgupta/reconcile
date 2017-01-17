@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Top menu item -->
+        <!--
+            This menu item's purpose is to overwrite another one defined in
+            the base module in order to set new groups.
+        -->
+
+            
+        <menuitem
+            id= "menu_main_seller_order"
+            parent= "main_ecommerce_seller_place_config"
+            sequence= "2"
+            name= "Seller Order Details" />
+
+
+
+        <record id="view_seller_place_order_tree" model="ir.ui.view">
+            <field name="name">seller.place.order.tree</field>
+            <field name="model">seller.place.order</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Seller Place Order" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="order_id"/>
+                    <field name="product"/>
+                    <field name="quantity"/>
+                    <field name="seller_price_per_item"/>
+                    <field name="shipping_charge_per_item" />
+                    <field name="invoice_amount"/>
+                    <field name="order_state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_seller_place_order_form" model="ir.ui.view">
+            <field name="name">seller.place.order.form</field>
+            <field name="model">seller.place.order</field>
+            <field name="arch" type="xml">
+                <form string="Seller Place Order" class="o_sale_order">
+                <header>
+                </header>
+                <sheet>
+                	<div class="oe_button_box" name="button_box">
+	                    <button type="object"
+	                        name="action_view_return_delivery"
+	                        class="oe_stat_button"
+	                        attrs="{'invisible': [('delivery_return_count', '=', 0)]}"
+	                        icon="fa-truck">
+	                        <field name="delivery_return_count" widget="statinfo" string="Return Delivery"/>
+	                    </button>
+	                    <button type="object"
+	                        name="action_view_transaction"
+	                        class="oe_stat_button"
+	                        attrs="{'invisible': [('transaction_count', '=', 0)]}"
+	                        icon="fa-pencil-square-o">
+	                        <field name="transaction_count" widget="statinfo" string="Transaction"/>
+	                    </button>
+                    </div>                    
+                    <div class="oe_title">
+                        <h1>
+                            <!-- <field name="name" readonly="1"/> -->
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="order_state" />
+                            <field name="shipment_id" />
+                            <field name="order_item_id" />
+                            <field name="order_id" />
+                            <field name="order_type" />
+                            <field name="sku" />
+                            <field name="product" />
+                            <field name="invoice_no" />
+                            <field name="invoice_date" />
+                            <field name="invoice_amount" />
+                        </group>
+                        <group>
+                            <field name="seller_price_per_item" />
+                            <field name="shipping_charge_per_item" />
+                            <field name="quantity" />
+                            <field name="buyer_name" />
+                            <field name="ship_to_name" />
+                            <field name="address_line1" />
+                            <field name="address_line2" />
+                            <field name="pin_code" />
+                            <field name="tracking_id" />
+                            <field name="order_date" />    
+                            <field name="state" />                        
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_seller_place_order_filter" model="ir.ui.view">
+            <field name="name">seller.place.order.select</field>
+            <field name="model">seller.place.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Seller Place Order">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+                    <field name="order_item_id" filter_domain="[('order_item_id','ilike',self)]" />
+                    <field name="order_type" filter_domain="[('order_type','ilike',self)]" />
+                    <field name="invoice_no" filter_domain="[('invoice_no','ilike',self)]" />
+                    <field name="product" filter_domain="[('product','ilike',self)]" />
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="order_date" string="Order Date" domain="[]" context="{'group_by':'order_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_seller_place_order" model="ir.actions.act_window">
+            <field name="name">Seller Place Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seller.place.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_order_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_seller_place_order_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Seller Order details.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_seller_place_order"
+            id="menu_seller_place_order" parent="menu_main_seller_order"
+            sequence="20" />
+            
+            
+            <!--This block is used to manage order return delivery    -->
+        <record id="view_seller_place_return_delivery_tree" model="ir.ui.view">
+            <field name="name">seller.place.return.delivery.tree</field>
+            <field name="model">seller.place.return.delivery</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Seller Place Order" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="order_id" />
+                    <field name="order_item_id" />
+                    <field name="return_type" />
+                    <field name="product" />
+                    <field name="quantity" />
+                    <field name="total_price" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_seller_place_return_delivery_form" model="ir.ui.view">
+            <field name="name">seller.place.return.delivery.form</field>
+            <field name="model">seller.place.return.delivery</field>
+            <field name="arch" type="xml">
+                <form string="Seller Place Return" class="o_sale_order">
+                <header>
+                	<button name="action_activate" states="draft,de-active" type="object" string="Activate"/>
+                	<button name="action_deactivate" states="draft,active" type="object" string="De Activate"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <!-- <field name="name" readonly="1"/> -->
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="return_approval_date" />
+                            <field name="return_requested_date" />
+                            <field name="return_delivery_promise_date" />
+                            <field name="picked_up_date" />
+                            <field name="completed_date" />
+                            <field name="return_id" />
+                            <field name="tracking_id" />
+                            <field name="order_id" />
+                            <field name="order_item_id" />
+
+                        </group>
+                        <group>
+                            <field name="return_type" />
+                            <field name="return_sub_type" />
+                            <field name="replacement_order_item_id" />
+                            <field name="return_status" />
+                            <field name="return_reason" />
+                            <field name="return_subreason" />
+                            <field name="comments" />
+                            <field name="sku" />
+                            <field name="product" />
+                            <field name="quantity" />
+                            <field name="total_price" />
+                            <field name="vendor_name" />                        
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_seller_place_return_delivery_filter" model="ir.ui.view">
+            <field name="name">seller.place.return.select</field>
+            <field name="model">seller.place.return.delivery</field>
+            <field name="arch" type="xml">
+                <search string="Search Seller Place Order">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+                    <field name="order_item_id" filter_domain="[('order_item_id','ilike',self)]" />
+                    <field name="tracking_id" filter_domain="[('tracking_id','ilike',self)]" />
+                    <field name="return_status" filter_domain="[('return_status','ilike',self)]" />
+                    <field name="product" filter_domain="[('product','ilike',self)]" />
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="completed_date" string="Completed Date" domain="[]" context="{'group_by':'completed_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_seller_place_return_delivery" model="ir.actions.act_window">
+            <field name="name">Seller Place Return Delivery</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seller.place.return.delivery</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_completed_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_seller_place_return_delivery_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Manage Seller Order Return Delivery.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_seller_place_return_delivery"
+            id="menu_seller_place_return_delivery" parent="menu_main_seller_order"
+            sequence="30" />
+            
+
+            <!--This block is used to manage order transaction    -->
+        <record id="view_seller_place_transaction_tree" model="ir.ui.view">
+            <field name="name">seller.place.transaction.tree</field>
+            <field name="model">seller.place.transaction</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Seller Place Order" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="settlement_ref_no"/>
+                    <field name="order_id"/>
+                    <field name="order_item_id"/>
+                    <field name="settlement_value"/>
+                    <field name="quantity"/>
+                    <field name="invoice_amount" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_seller_place_transaction_form" model="ir.ui.view">
+            <field name="name">seller.place.transaction.form</field>
+            <field name="model">seller.place.transaction</field>
+            <field name="arch" type="xml">
+                <form string="Seller Place Transaction" class="o_sale_order">
+                <header>
+                </header>
+                <sheet>
+                	<div class="oe_button_box" name="button_box">
+	                    <button type="object"
+	                        name="action_view_order"
+	                        class="oe_stat_button"
+	                        attrs="{'invisible': [('order_count', '=', 0)]}"
+	                        icon="fa-truck">
+	                        <field name="order_count" widget="statinfo" string="Orders"/>
+	                    </button>
+                    </div>                   
+                    <div class="oe_title">
+                        <h1>
+                            <!-- <field name="name" readonly="1"/> -->
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="settlement_ref_no" />
+                            <field name="order_type" />
+                            <field name="sku" />
+                            <field name="order_id" />
+                            <field name="order_item_id" />
+                            <field name="settlement_value" />
+                            <field name="order_date" />
+                            <field name="dispatch_date" />
+                            <field name="delivery_date" />
+                            <field name="settlement_date" />
+                            <field name="order_status" />
+                            <field name="quantity" />
+                            <field name="order_item_value" />
+                            <field name="sale_transaction_amount" />
+                            <field name="discount_transaction_amount" />
+                            <field name="refund" />
+                        </group>
+                        <group>
+                            <field name="protection_fund" />
+                            <field name="total_marketplace_fee" />
+                            <field name="service_tax" />
+                            <field name="sb_cess_tax" />
+                            <field name="kk_cess_tax" />
+                            <field name="settlement_value" />
+                            <field name="commission_rate" />
+                            <field name="commission" />
+                            <field name="payment_rate" />
+                            <field name="payment_fee" />
+                            <field name="fee_discount" />
+                            <field name="cancellation_fee" />
+                            <field name="fixed_fee" />
+                            <field name="admonetaisation_fee" />
+                            <field name="shipping_fee" />
+                            <field name="reverse_shipping_fee" />
+                            <field name="shipping_fee_reversal" />
+                            <field name="invoice_amount" />
+                            <field name="invoice_id" />
+                            <field name="invoice_date" />  
+                            <field name="dead_weight" />  
+                            <field name="volumetric_weight" />                        
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_seller_place_transaction_delivery_filter" model="ir.ui.view">
+            <field name="name">seller.place.transaction.select</field>
+            <field name="model">seller.place.transaction</field>
+            <field name="arch" type="xml">
+                <search string="Search Seller Place Transaction">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+                    <field name="order_item_id" filter_domain="[('order_item_id','ilike',self)]" />
+                    <field name="invoice_id" filter_domain="[('invoice_id','ilike',self)]" />
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="invoice_date" string="Invoice Date" domain="[]" context="{'group_by':'invoice_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_seller_place_transaction" model="ir.actions.act_window">
+            <field name="name">Seller Place Transaction</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seller.place.transaction</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_invoice_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_seller_place_transaction_delivery_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Manage Seller Order Transaction.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_seller_place_transaction"
+            id="menu_seller_place_transaction" parent="menu_main_seller_order"
+            sequence="40" />
+            
+</odoo>

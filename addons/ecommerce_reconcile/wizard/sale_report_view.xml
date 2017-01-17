@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<record id="view_seller_sale_report_form" model="ir.ui.view">
+			<field name="name">Seller Sale Report</field>
+			<field name="model">seller.sale.report</field>
+			<field name="arch" type="xml">
+				<form string="Seller Sale Report">
+					<separator colspan="4" string="This wizard is used to extract Sale Report in csv format."/>
+					<field name="filename" invisible="1" />
+					<field name="filedata" readonly="1" filename="filename" attrs="{'invisible':[('filedata','=',False)]}" />
+					<group>		
+						<group>		
+							<field name="market_place_id" widget="selection" />
+							<field name="vendor_place_id" widget="selection" />
+							<field name="password" password="True" />	
+						</group>
+						<group>
+							<field name="start_date" required="1" />
+							<field name="end_date" required="1" />
+						</group>
+					</group>				
+					<separator colspan="4"/>
+					<group colspan="2" col="4">
+						<notebook>
+							<page string="Reports">
+								<button name="action_seller_sale_report" string="Sale Report" type="object" />
+							</page>
+						</notebook>		
+					</group>			
+			       	<footer>
+                        <button special="cancel" string="Cancel" />
+                    </footer>
+                										
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_seller_sale_report">
+			<field name="name">Download Reports</field>
+			<field name="res_model">seller.sale.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<!-- <field name="view_id ref="view_import_payroll_recurring"/> -->
+			<field name="target">new</field>
+		</record>
+		<menuitem name="Download Reports" id="menu_seller_sale_report" parent="menu_main_seller_order"
+			action="action_seller_sale_report" sequence="190"/>
+
+</odoo>
