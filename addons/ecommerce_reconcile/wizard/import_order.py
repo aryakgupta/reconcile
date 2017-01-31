@@ -25,6 +25,10 @@ class OrderImport(models.TransientModel):
     market_place_id = fields.Many2one('market.place', 'Market Place', required=True)
     vendor_place_id = fields.Many2one('vendor.place', 'Vendor Place', required=True)
     password = fields.Char(string='Password', required=True, copy=False)    
+    market_place_type = fields.Selection([
+                                ('flipkart', 'Flipkart'),
+                                ('amazon', 'Amazon'),
+                                ], string='Market Place Type ', required=True, copy=False)    
     
     @api.multi
     def _read_csv_data(self):
@@ -448,4 +452,4 @@ class OrderImport(models.TransientModel):
             res = self.do_upload_transaction()
         else:
             raise UserError(_('Credential invalid.!Please contact to Administrator.'))            
-        return res        
+        return res

@@ -4,3 +4,4 @@
 import import_order
 import message_wiz
 import sale_report
+import import_order_amazon

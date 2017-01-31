@@ -29,177 +29,12 @@ class SellerSaleReport(models.TransientModel):
     end_date = fields.Date('End Date')
     market_place_id = fields.Many2one('market.place', 'Market Place', required=True)
     vendor_place_id = fields.Many2one('vendor.place', 'Vendor Place', required=True)
-    password = fields.Char(string='Password', required=True, copy=False)    
+    password = fields.Char(string='Password', required=True, copy=False) 
+    market_place_type = fields.Selection([
+                                ('flipkart', 'Flipkart'),
+                                ('amazon', 'Amazon'),
+                                ], string='Market Place Type ', required=True,copy=False)         
     
-
-#     @api.multi
-#     def do_seller_sale_report(self):
-#         """
-#             This method is used to extract the sale report in CSV format.
-#         """
-#         seller_place_order_obj = self.env['seller.place.order']
-#         seller_place_return_delivery_obj = self.env['seller.place.return.delivery']
-#         seller_place_transaction_obj = self.env['seller.place.transaction']
-#         str1="Ordered On"+","
-#         str2="Shipment ID"+","
-#         str3="Order Id"+","
-#         str4="ORDER ITEM ID"+","
-#         str5="Order State"+","
-#         str6="SKU"+","
-#         str7="Product"+","
-#         str8="Invoice No."+","
-#         str9="Invoice Date"+","
-#         str10="Invoice Amount"+","
-#         str11="Selling Price Per Item"+","
-#         str12="Shipping Charge per item"+","
-#         str13="Quantity"+","
-#         str14="Buyer name"+","
-#         str15="Ship to name"+","
-#         str16="State"+","
-#         str17="Tracking ID"+","
-#         str18="Order Return Delivery"+","
-#         str19="TR. Settlement Value (Rs.)"+","
-#         str20="TR. Total Settlement Value (Rs.)"+","
-#         str21="TR. Order Date"+","
-#         str22="TR. Settlement Date"+","
-#         str23="TR. Order Status"+","
-#         str24="TR. Dead Weight (In Kgs)"+","
-#         str25="TR. Volumetric Weight(In Kgs)"+","
-#         str26="TR. Shipping Fee (Rs.)"+","
-#         str27="TR. Total Shipping Fee (Rs.)"+","
-#         str28="TR. Reverse Shipping  Fee (Rs.)"+","
-#         str29="TR. Total Reverse Shipping  Fee (Rs.)"+","
-#         strn = str1+str2+str3+str4+str5+str6+str7+str8+str9+str10+str11+str12+str13+str14+str15+str16+str17+str18+str19+str20+str21+str22+str23+str24+str25+str26+str27+str28+str29+"\n"
-#         fp = cStringIO.StringIO()
-#         writer = csv.writer(fp)
-#         fp.write(strn)
-#         
-#         #list=[]
-#         list=[['a','b','c'],['a','b','c'],['a','b','c']]
-#         seller_place_order_res = seller_place_order_obj.search([('order_date','>=',self.start_date),
-#                                                                 ('order_date','<=',self.end_date)])
-#         print"seller_place_order_res>>>>>>>",seller_place_order_res
-#         for seller_place_order in seller_place_order_res:
-#             line_data =[]
-#             order_id = seller_place_order.order_id
-#             order_item_id = seller_place_order.order_item_id
-#             line_data.append(seller_place_order.order_date)
-#             line_data.append(seller_place_order.shipment_id)
-#             line_data.append(order_id)
-#             line_data.append(order_item_id)
-#             line_data.append(seller_place_order.order_state)
-#             line_data.append(seller_place_order.sku)
-#             line_data.append(seller_place_order.product)
-#             line_data.append(seller_place_order.invoice_no)
-#             line_data.append(seller_place_order.invoice_date)
-#             line_data.append(seller_place_order.invoice_amount)
-#             line_data.append(seller_place_order.seller_price_per_item)
-#             line_data.append(seller_place_order.shipping_charge_per_item)
-#             line_data.append(seller_place_order.quantity)
-#             line_data.append(seller_place_order.buyer_name)
-#             line_data.append(seller_place_order.ship_to_name)
-#             line_data.append(seller_place_order.state)
-#             line_data.append(seller_place_order.tracking_id)
-#             
-#             seller_place_return_delivery_res = seller_place_return_delivery_obj.search([('order_id','=',order_id),
-#                                                                                         ('order_item_id','=',order_item_id)])
-#             if seller_place_return_delivery_res:
-#                 line_data.append(True)
-#             else:
-#                 line_data.append(False)
-#             order_item_list = order_item_id.split("'")
-#             print"order_item_list>>>>>>>>>",order_item_list
-#             if len(order_item_list)==2:
-#                 order_item_str = 'OI:' + str(order_item_list[1])
-#                 seller_place_transaction_res = seller_place_transaction_obj.search([('order_id','=',order_id),
-#                                                                                     ('order_item_id','=',order_item_str)])
-#                 settlement_val = []
-#                 total_settlement_val = 0.0
-#                 order_date = []
-#                 settlement_date = []
-#                 order_status = []
-#                 dead_weight = []
-#                 volumetric_weight = []
-#                 shipping_fee = []
-#                 total_shipping_fee = 0.0
-#                 reverse_shipping_fee = []
-#                 total_everse_shipping_fee = 0.0 
-# 
-#                 #product_name = (''.join(prod_name)).strip().rstrip()
-#                 
-#                 for seller_place_transaction in seller_place_transaction_res:
-#                     settlement_value = seller_place_transaction.settlement_value
-#                     settlement_val.append(str(settlement_value))
-#                     settlement_val.append("\n") 
-#                     total_settlement_val = total_settlement_val + float(settlement_value)
-#                     order_date.append(str(seller_place_transaction.order_date))
-#                     order_date.append("\n")
-#                     settlement_date.append(str(seller_place_transaction.settlement_date))
-#                     settlement_date.append("\n")
-#                     order_status.append(str(seller_place_transaction.order_status))
-#                     order_status.append("\n")
-#                     dead_weight.append(str(seller_place_transaction.dead_weight))
-#                     dead_weight.append("\n")
-#                     volumetric_weight.append(str(seller_place_transaction.volumetric_weight))
-#                     volumetric_weight.append("\n")
-#                     shipping_fee.append(str(seller_place_transaction.shipping_fee))
-#                     shipping_fee.append("\n")
-#                     total_shipping_fee = total_shipping_fee + float(seller_place_transaction.shipping_fee)
-#                     reverse_shipping_fee.append(str(seller_place_transaction.reverse_shipping_fee))
-#                     reverse_shipping_fee.append("\n")
-#                     total_everse_shipping_fee = total_everse_shipping_fee + float(seller_place_transaction.shipping_fee_reversal)
-#                 print"settlement_val>>>>",settlement_val
-#                 settlement_val = (''.join(settlement_val))
-#                 order_date =  (''.join(order_date)).strip().rstrip()
-#                 settlement_date = (''.join(settlement_date)).strip().rstrip()
-#                 order_status = (''.join(order_status)).strip().rstrip()
-#                 dead_weight = (''.join(dead_weight)).strip().rstrip()
-#                 volumetric_weight = ('\n'.join(volumetric_weight)).strip().rstrip()
-#                 shipping_fee = (''.join(shipping_fee)).strip().rstrip()
-#                 reverse_shipping_fee = ("\r\n".join(reverse_shipping_fee)).strip().rstrip()   
-#                 print"settlement_val>>>>>>",settlement_val
-#                 print"reverse_shipping_fee>>>>>>>>",reverse_shipping_fee                
-#                 line_data.append(settlement_val)
-#                 line_data.append(total_settlement_val)
-#                 line_data.append(order_date)
-#                 line_data.append(settlement_date)
-#                 line_data.append(order_status)
-#                 line_data.append(dead_weight)
-#                 line_data.append(volumetric_weight)
-#                 line_data.append(shipping_fee)
-#                 line_data.append(total_shipping_fee)
-#                 line_data.append(reverse_shipping_fee)
-#                 line_data.append(total_everse_shipping_fee)    
-#                     
-#                 print"seller_place_transaction_res>>>>>>>>",seller_place_transaction_res
-#             list.append(line_data)
-#         for line in list:
-#             for lines in line:
-#                 fp.write(str(lines))
-#                 if type(lines)==unicode:
-#                     fp.write(str(lines.encode('utf-8')).replace('\r\n','').replace('\n','').replace('None',''))
-#                 else:
-#                     fp.write(str(lines).replace('\r\n','').replace('\n','').replace('None',''))
-#                 fp.write(",")
-#             fp.write("\n")
-#         fp.seek(0)
-#         data = fp.read()
-#         fp.close()
-#         out=base64.encodestring(data)
-#         file_name='SaleReport-'+str(self.start_date) +'_'+str(self.end_date)+'-' +str(self.market_place_id.name.name)+'_'+ str(self.vendor_place_id.name.name) + '.csv'
-#         self.write({'filedata':out, 'filename':file_name})
-#         return {
-#                     'name':'Seller Sale Report',
-#                     'res_model':'seller.sale.report',
-#                     'type':'ir.actions.act_window',
-#                     'view_type':'form',
-#                     'view_mode':'form',
-#                     'target':'new',
-#                     'nodestroy': True,
-#                     #'context': context,
-#                     'res_id': self.id,
-#                     }         
-#         return True
 
     @api.multi
     def do_seller_sale_report(self):
@@ -240,11 +75,6 @@ class SellerSaleReport(models.TransientModel):
         str29="TR. Total Reverse Shipping  Fee (Rs.)"
         str30="TR. Invoice"
         str31="TR. Transaction No."
-#         #strn = str1+str2+str3+str4+str5+str6+str7+str8+str9+str10+str11+str12+str13+str14+str15+str16+str17+str18+str19+str20+str21+str22+str23+str24+str25+str26+str27+str28+str29+"\n"
-#         fp = cStringIO.StringIO()
-#         writer = csv.writer(fp)
-#         fp.write(strn)
-#         
         list=[]
         seller_place_order_res = seller_place_order_obj.search([('order_date','>=',self.start_date),
                                                                 ('order_date','<=',self.end_date)])
@@ -522,3 +352,198 @@ class SellerSaleReport(models.TransientModel):
         else:
             raise UserError(_('Credential invalid.!Please contact to Administrator.'))
         return res  
+    
+    @api.multi
+    def do_amazon_seller_sale_report(self):
+        """
+            This method is used to extract the Amazon sale report in xls format.
+        """
+        amazon_seller_place_order_obj = self.env['amazon.seller.place.order']
+        str1="Date"
+        str2="Order ID"
+        str3="SKU"
+        str4="Transaction type"
+        str5="Payment Type"
+        str6="Payment Detail"
+        str7="Amount"
+        str8="Total Amount"
+        str9="Quantity"
+        str10="Total Quantity"
+        str11="Product Title"
+        fl = cStringIO.StringIO()
+        workbook = xlwt.Workbook()#xlsxwriter.Workbook()
+        worksheet = workbook.add_sheet('New Sheet',cell_overwrite_ok=True)
+        
+        font = xlwt.Font()
+        font.bold = True
+        bold_style = xlwt.XFStyle()
+        bold_style.font = font
+        style = xlwt.easyxf('font: bold 1, color red;')
+        back_color = xlwt.easyxf('pattern: back_colour yellow')
+        
+        """pattern = xlwt.Pattern()
+        pattern.pattern = xlwt.Pattern.SOLID_PATTERN
+        pattern.pattern_back_colour = xlwt.Style.colour_map['yellow']
+        style.pattern = pattern"""
+        
+        
+        """# Add a number format for cells with money.
+        money_format = workbook.add_format({'num_format': '$#,##0'})
+        
+        # Add an Excel date format.
+        date_format = workbook.add_format({'num_format': 'mmmm d yyyy'})"""
+        style1 = xlwt.easyxf('font: bold 1;pattern: pattern solid, fore_colour green;')#For bold and bg_color
+        style2 = xlwt.easyxf('pattern: pattern solid, fore_colour green;')#For bold and bg_color
+        yellow_style_bold = xlwt.easyxf('font: bold 1;pattern: pattern solid, fore_colour yellow;')#For bold and bg_color
+        yellow_style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')#For bold and bg_color
+        orange_style_bold = xlwt.easyxf('font: bold 1;pattern: pattern solid, fore_colour orange;')#For bold and bg_color
+        orange_style = xlwt.easyxf('pattern: pattern solid, fore_colour orange;')#For bold and bg_color
+        pink_style_bold = xlwt.easyxf('font: bold 1;pattern: pattern solid, fore_colour pink;')#For bold and bg_color
+        pink_style = xlwt.easyxf('pattern: pattern solid, fore_colour pink;')#For bold and bg_color                        
+        worksheet.col(0).width = 500*8
+        worksheet.col(1).width = 500*8
+        worksheet.col(2).width = 500*20
+        worksheet.col(3).width = 500*8
+        worksheet.col(4).width = 500*8
+        worksheet.col(5).width = 500*8
+        worksheet.col(6).width = 500*15
+        worksheet.col(7).width = 500*15
+        worksheet.col(8).width = 500*15
+        worksheet.col(9).width = 500*8
+        worksheet.col(10).width = 500*12
+        # Write some data headers.
+        worksheet.write(0,0, str1,style=bold_style)
+        worksheet.write(0,1, str2,style=bold_style)
+        worksheet.write(0,2, str3,style=bold_style)
+        worksheet.write(0,3, str4,style=bold_style)
+        worksheet.write(0,4, str5,style=bold_style)
+        worksheet.write(0,5, str6,style=bold_style)
+        worksheet.write(0,6, str7,style=bold_style)
+        worksheet.write(0,7, str8,style=yellow_style_bold)
+        worksheet.write(0,8, str9,style=bold_style)
+        worksheet.write(0,9, str10,style=orange_style_bold)
+        worksheet.write(0,10, str11,style=bold_style)
+        
+        # Some data we want to write to the worksheet.
+        """expenses = (
+            ['Rent', '2013-01-13', 1000],
+            ['Gas',  '2013-01-14',  100],
+            ['Food', '2013-01-16',  300],
+            ['Gym',  '2013-01-20',   50],
+            )"""
+            
+        amazon_seller_place_order_res = amazon_seller_place_order_obj.search([('order_date','>=',self.start_date),
+                                                                ('order_date','<=',self.end_date)])
+        print"amazon_seller_place_order_res>>>>>>>",amazon_seller_place_order_res
+                    
+        amazon_sale_order_dic ={}
+        for amazon_seller_place_order in amazon_seller_place_order_res:
+            if amazon_seller_place_order.order_id:
+                order_id = amazon_seller_place_order.order_id
+                if amazon_sale_order_dic.has_key(order_id):
+                    amazon_sale_order_dic[order_id].append(amazon_seller_place_order.id) 
+                else:
+                    amazon_sale_order_dic[order_id] = [amazon_seller_place_order.id]
+        #Prepare final list i.e write in .xls file            
+        list=[]
+        for amazon_order_key,amazon_order_ids in amazon_sale_order_dic.iteritems():
+            line_data =[]
+            Date = []
+            SKU = []
+            Transaction_type = []
+            Payment_Type = []
+            Payment_Detail = []
+            Amount = []
+            Total_Amount =0.0
+            Quantity =[]
+            Total_Quantity = 0.0
+            Product_Title = []
+            for amazon_order_id in amazon_order_ids:
+                amazon_seller_place_order = amazon_seller_place_order_obj.search([('id','=',amazon_order_id)])
+                Date.append(amazon_seller_place_order.order_date)
+                SKU.append(amazon_seller_place_order.sku)
+                Transaction_type.append(amazon_seller_place_order.transaction_type)
+                Payment_Type.append(amazon_seller_place_order.payment_type)
+                Payment_Detail.append(str(amazon_seller_place_order.payment_detail))
+                Amount.append(str(amazon_seller_place_order.amount))
+                Total_Amount = Total_Amount + amazon_seller_place_order.amount
+                Quantity.append(str(amazon_seller_place_order.quantity))
+                Total_Quantity = Total_Quantity + amazon_seller_place_order.quantity
+                Product_Title.append(str(amazon_seller_place_order.product_title))
+            Date = ('\r\n'.join(Date))
+            SKU = ('\r\n'.join(SKU))
+            Transaction_type = ('\r\n'.join(Transaction_type))
+            Payment_Type = ('\r\n'.join(Payment_Type))
+            Payment_Detail = ('\r\n'.join(Payment_Detail))
+            print"Amount>>>>..",Amount
+            Amount = ('\r\n'.join(Amount))
+            Quantity = ('\r\n'.join(Quantity))
+            Product_Title = ('\r\n'.join(Product_Title))
+
+            line_data.append(Date)
+            line_data.append(amazon_order_key)
+            line_data.append(SKU)
+            line_data.append(Transaction_type)
+            line_data.append(Payment_Type)
+            line_data.append(Payment_Detail)
+            line_data.append(Amount)
+            line_data.append(Total_Amount)
+            line_data.append(Quantity)
+            line_data.append(Total_Quantity)
+            line_data.append(Product_Title)
+            
+            list.append(line_data)
+            
+        
+        print"list>>>>>>>>>>>",list
+        # Start from the first cell below the headers.
+        row = 1
+        col = 0        
+        for line_data in list:
+            print"line_data>>>>>",line_data
+            print"len of line_data",len(line_data)
+            worksheet.write(row, col, line_data[0])  
+            worksheet.write(row, col + 1, line_data[1])             
+            worksheet.write(row, col + 2, line_data[2])
+            worksheet.write(row, col + 3, line_data[3])
+            worksheet.write(row, col + 4, line_data[4])
+            worksheet.write(row, col + 5, line_data[5])
+            worksheet.write(row, col + 6, line_data[6])
+            worksheet.write(row, col + 7, line_data[7])
+            worksheet.write(row, col + 8, line_data[8])
+            worksheet.write(row, col + 9, line_data[9])
+            worksheet.write(row, col + 10, line_data[10])
+            row = row + 1                     
+        print "row:::::::",row
+
+        workbook.save(fl)
+        fl.seek(0)
+        data = fl.read()
+        out=base64.encodestring(data)
+        
+        file_name='AmazonSaleReport-'+str(self.start_date) +'_'+str(self.end_date)+'-' +str(self.market_place_id.name.name)+'_'+ str(self.vendor_place_id.name.name) + '.xls'
+        self.write({'filedata':out, 'filename':file_name})        
+        
+        return {
+                    'name':'Amazon Seller Sale Report',
+                    'res_model':'seller.sale.report',
+                    'type':'ir.actions.act_window',
+                    'view_type':'form',
+                    'view_mode':'form',
+                    'target':'new',
+                    'nodestroy': True,
+                    #'context': context,
+                    'res_id': self.id,
+                    }   
+        return True     
+    
+    @api.multi
+    def action_amazon_seller_sale_report(self):
+        print"action_seller_amazon_sale_report>>>>>>>>>>>callled"
+        seller_place_config_obj = self.env['seller.place.config']
+        auth_res = seller_place_config_obj.get_authentication(self.market_place_id.id, self.vendor_place_id.id, self.password)
+        if auth_res:
+            res = self.do_amazon_seller_sale_report()
+        else:
+            raise UserError(_('Credential invalid.!Please contact to Administrator.'))
+        return res      

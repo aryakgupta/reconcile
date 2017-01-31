@@ -17,6 +17,7 @@ Manage FK Reconcile
     'data': [
         'views/seller_config_view.xml',
         'views/seller_reconcile_view.xml',
+        'views/amazon_seller_reconcile_view.xml',
         'wizard/import_order_views.xml',
         'wizard/message_wizard_view.xml',
         'wizard/sale_report_view.xml',

@@ -14,7 +14,7 @@
         <menuitem
             id= "menu_main_seller_place_config"
             parent= "main_ecommerce_seller_place_config"
-            sequence= "10"
+            sequence= "2000"
             name= "Seller Place Config" />
 
 
@@ -55,6 +55,7 @@
                         </group>
                         <group>
                             <field name="password" />
+                            <field name="market_place_type" required="1" />
                         </group>
                     </group>
                 </sheet>

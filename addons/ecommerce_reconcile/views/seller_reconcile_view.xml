@@ -11,8 +11,8 @@
         <menuitem
             id= "menu_main_seller_order"
             parent= "main_ecommerce_seller_place_config"
-            sequence= "2"
-            name= "Seller Order Details" />
+            sequence= "30"
+            name= "Flipkart Seller Details" />
 
 
 

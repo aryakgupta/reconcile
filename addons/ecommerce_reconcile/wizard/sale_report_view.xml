@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+        <menuitem name="Download Sales Report"
+            id="menu_main_download_sales_report" parent="main_ecommerce_seller_place_config" sequence="5" />
+            
+            
 		<record id="view_seller_sale_report_form" model="ir.ui.view">
 			<field name="name">Seller Sale Report</field>
 			<field name="model">seller.sale.report</field>
 			<field name="arch" type="xml">
 				<form string="Seller Sale Report">
-					<separator colspan="4" string="This wizard is used to extract Sale Report in csv format."/>
+					<separator colspan="4" string="This wizard is used to extract Sale Report in xls format."/>
 					<field name="filename" invisible="1" />
 					<field name="filedata" readonly="1" filename="filename" attrs="{'invisible':[('filedata','=',False)]}" />
 					<group>		
-						<group>		
-							<field name="market_place_id" widget="selection" />
-							<field name="vendor_place_id" widget="selection" />
+						<group>
+							<field name="market_place_type" />		
+							<field name="market_place_id" domain="[('market_place_type','=',market_place_type)]" widget="selection" />
+							<field name="vendor_place_id" domain="[('market_place_type','=',market_place_type)]" widget="selection" />
 							<field name="password" password="True" />	
 						</group>
 						<group>
@@ -22,9 +28,12 @@
 					<separator colspan="4"/>
 					<group colspan="2" col="4">
 						<notebook>
-							<page string="Reports">
-								<button name="action_seller_sale_report" string="Sale Report" type="object" />
+							<page string="Flipkart Reports" attrs="{'invisible': [('market_place_type', '!=','flipkart')]}"  >
+								<button name="action_seller_sale_report" string="Flipkart Sale Report" type="object" />
 							</page>
+							<page string="Amazon Reports" attrs="{'invisible': [('market_place_type', '!=','amazon')]}"  >
+								<button name="action_amazon_seller_sale_report" string="Amazon Sale Report" type="object" />
+							</page>					
 						</notebook>		
 					</group>			
 			       	<footer>
@@ -43,7 +52,8 @@
 			<!-- <field name="view_id ref="view_import_payroll_recurring"/> -->
 			<field name="target">new</field>
 		</record>
-		<menuitem name="Download Reports" id="menu_seller_sale_report" parent="menu_main_seller_order"
-			action="action_seller_sale_report" sequence="190"/>
+
+		<menuitem name="Download Sales Reports" id="menu_seller_sale_report" parent="menu_main_download_sales_report"
+			action="action_seller_sale_report" sequence="5"/>
 
 </odoo>

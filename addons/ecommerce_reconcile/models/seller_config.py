@@ -27,7 +27,11 @@ class SellerPlaceConfig(models.Model):
         ('de-active', 'De-Active'),
         ], string='Status', readonly=True, copy=False, default='draft')
 
-
+    market_place_type = fields.Selection([
+                                ('flipkart', 'Flipkart'),
+                                ('amazon', 'Amazon'),
+                                ], string='Market Place Type ', copy=False) 
+    
     @api.multi
     def get_authentication(self, market_place_id, vendor_place_id, password):
         """
@@ -57,6 +61,10 @@ class MarketPlace(models.Model):
     _order = 'id desc'
 
     name = fields.Many2one('res.partner', 'Partner')
+    market_place_type = fields.Selection([
+                                ('flipkart', 'Flipkart'),
+                                ('amazon', 'Amazon'),
+                                ], string='Market Place Type ', required=True,copy=False)     
     
 class VendorPlace(models.Model):
     _name = "vendor.place"
@@ -64,3 +72,8 @@ class VendorPlace(models.Model):
     _order = 'id desc'
 
     name = fields.Many2one('res.partner', 'Partner')
+    market_place_type = fields.Selection([
+                                ('flipkart', 'Flipkart'),
+                                ('amazon', 'Amazon'),
+                                ], string='Market Place Type ', required=True, copy=False) 
+        
