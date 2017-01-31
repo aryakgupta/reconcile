@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <menuitem name="Imports Bulk Data"
+        <menuitem name="Import Bulk Data"
             id="menu_main_import_bulk_data" parent="main_ecommerce_seller_place_config" sequence="15" />
             
             
