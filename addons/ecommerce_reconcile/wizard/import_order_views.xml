@@ -2,7 +2,7 @@
 <odoo>
 
         <menuitem name="Import Bulk Data"
-            id="menu_main_import_bulk_data" parent="main_ecommerce_seller_place_config" sequence="15" />
+            id="menu_main_import_bulk_data" parent="main_ecommerce_seller_place_config" sequence="700" />
             
             
 		<record id="view_bulk_order_import_form" model="ir.ui.view">
