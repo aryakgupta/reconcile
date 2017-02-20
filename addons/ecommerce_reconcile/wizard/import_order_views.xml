@@ -32,7 +32,11 @@
 							</page>
 							<page string="Amazon Bulk Import Order" attrs="{'invisible': [('market_place_type', '!=','amazon')]}"  >
 								<button name="action_upload_amazon_order" string="Upload Amazon Order" type="object" />
-							</page>							
+							</page>	
+							<page string="Paytm Bulk Import Data" attrs="{'invisible': [('market_place_type', '!=','paytm')]}"  >
+								<button name="action_upload_paytm_order" string="Upload Paytm Order" type="object" />
+								<button name="action_upload_paytm_payment" string="Upload Paytm Payment" type="object" />
+							</page>															
 						</notebook>		
 					</group>			
 			       	<footer>

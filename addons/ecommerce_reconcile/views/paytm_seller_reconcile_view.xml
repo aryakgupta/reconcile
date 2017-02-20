@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <menuitem name="Paytm"
+            id="menu_main_paytm_seller_place_order" parent="main_ecommerce_seller_place_config" sequence="50" />
+            
+        <!-- Paytm Order view info -->
+            
+        <record id="view_paytm_seller_place_order_tree" model="ir.ui.view">
+            <field name="name">paytm.seller.place.order.tree</field>
+            <field name="model">paytm.seller.place.order</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Paytm Seller Place Order" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="order_date" />
+                    <field name="order_id"/>
+                    <field name="item_name"/>
+                    <field name="item_mrp" />
+                    <field name="item_price"/>       
+                    <field name="quantity"/>       
+                    <field name="shipping_amount"/>       
+                    <field name="estimated_shipping_date"/>                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_paytm_seller_place_order_form" model="ir.ui.view">
+            <field name="name">paytm.seller.place.order.form</field>
+            <field name="model">paytm.seller.place.order</field>
+            <field name="arch" type="xml">
+                <form string="Paytm Seller Place Order" class="o_sale_order">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="order_date" />
+                            <field name="order_id" />
+                            <field name="item_id" />
+                            <field name="item_name" />
+                            <field name="merchant_id" />
+                            <field name="item_sku" />
+                            <field name="item_product_id" />
+                            <field name="item_status" />
+                            <field name="updation_date" />
+                        </group>
+                        <group>
+                            <field name="item_mrp" />
+                            <field name="item_price" />
+                            <field name="quantity" />
+                            <field name="shipping_amount" />
+                            <field name="estimated_shipping_date" />
+                            <field name="fulfillment_service_id" />
+                            <field name="sla_extended" />
+                            <field name="customer_firstname" />
+                            <field name="customer_lastname" />
+                            <field name="customer_email" />
+                            <field name="phone" />
+                            <field name="address" />
+                            <field name="city" />
+                            <field name="state" />
+                            <field name="pincode" />
+                            <field name="invoice_id" />     
+                            <field name="attributes" />     
+                            <field name="replacement_flag" />     
+                            <field name="paytm_warehouse_id" />     
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_paytm_seller_place_order_filter" model="ir.ui.view">
+            <field name="name">paytm.seller.place.order.select</field>
+            <field name="model">paytm.seller.place.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Paytm Seller Place Order">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+<!--                     <field name="sku" filter_domain="[('sku','ilike',self)]" />
+                    <field name="product_title" filter_domain="[('product_title','ilike',self)]" /> -->
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="order_date" string="Order Date" domain="[]" context="{'group_by':'order_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_paytm_seller_place_order" model="ir.actions.act_window">
+            <field name="name">Paytm Seller Place Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">paytm.seller.place.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_order_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_paytm_seller_place_order_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Seller Order details.
+                </p>
+            </field>
+        </record>
+
+
+            
+        <menuitem action="action_paytm_seller_place_order"
+            id="menu_paytm_seller_place_order" parent="menu_main_paytm_seller_place_order"
+            sequence="60" />
+
+		<!-- Paytm payment view info -->
+        <record id="view_paytm_seller_place_payment_tree" model="ir.ui.view">
+            <field name="name">paytm.seller.place.payment.tree</field>
+            <field name="model">paytm.seller.place.payment</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Paytm Seller Place Payment" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="order_date" />
+                    <field name="order_id"/>
+                    <field name="order_item_id"/>
+                    <field name="product_name"/>
+                    <field name="total_price"/>
+                    <field name="net_adjustments"/>
+                    <field name="order_item_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_paytm_seller_place_payment_form" model="ir.ui.view">
+            <field name="name">paytm.seller.place.payment.form</field>
+            <field name="model">paytm.seller.place.payment</field>
+            <field name="arch" type="xml">
+                <form string="Paytm Seller Place Payment" class="o_sale_order">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="order_date" />
+                            <field name="order_id" />
+                            <field name="order_item_id" />
+                            <field name="return_date" />
+                            <field name="product_id" />
+                            <field name="product_name" />
+                            <field name="merchant_sku" />
+                            <field name="order_item_status" />
+                            <field name="settlement_date" />
+                            <field name="payment_type" />
+                            <field name="payment_status" />
+                            <field name="adjustment_reason" />
+                            
+                        </group>
+                        <group>
+                            <field name="total_price" />
+                            <field name="marketplace_commission" />
+                            <field name="logistics_charges" />
+                            <field name="pg_commission" />
+                            <field name="penalty" />
+                            <field name="adjustment_amount" />
+                            <field name="adjustment_taxes" />
+                            <field name="net_adjustments" />
+                            <field name="service_tax" />
+                            <field name="payable_amount" />  
+                            <field name="payout_wallet" />  
+                            <field name="payout_pg" />  
+                            <field name="payout_cod" />  
+                            <field name="wallet_utr" />  
+                            <field name="pg_utr" />  
+                            <field name="cod_utr" />  
+                            <field name="operator_reference_number" />  
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_paytm_seller_place_payment_filter" model="ir.ui.view">
+            <field name="name">paytm.seller.place.payment.select</field>
+            <field name="model">paytm.seller.place.payment</field>
+            <field name="arch" type="xml">
+                <search string="Search Paytm Seller Place Payment">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+                    <field name="order_item_id" filter_domain="[('order_item_id','ilike',self)]" />
+                    <field name="product_name" filter_domain="[('product_name','ilike',self)]" /> 
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="order_date" string="Order Date" domain="[]" context="{'group_by':'order_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_paytm_seller_place_payment" model="ir.actions.act_window">
+            <field name="name">Paytm Seller Place Payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">paytm.seller.place.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_order_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_paytm_seller_place_payment_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Seller Payment details.
+                </p>
+            </field>
+        </record>
+
+
+            
+        <menuitem action="action_paytm_seller_place_payment"
+            id="menu_paytm_seller_place_payment" parent="menu_main_paytm_seller_place_order"
+            sequence="80" />            
+            
+</odoo>

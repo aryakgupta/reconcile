@@ -33,6 +33,7 @@ class SellerSaleReport(models.TransientModel):
     market_place_type = fields.Selection([
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
+                                ('paytm', 'Paytm'),
                                 ], string='Market Place Type ', required=True,copy=False)         
     
 

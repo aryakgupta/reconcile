@@ -30,6 +30,7 @@ class SellerPlaceConfig(models.Model):
     market_place_type = fields.Selection([
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
+                                ('paytm', 'Paytm'),
                                 ], string='Market Place Type ', copy=False) 
     
     @api.multi
@@ -64,6 +65,7 @@ class MarketPlace(models.Model):
     market_place_type = fields.Selection([
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
+                                ('paytm', 'Paytm'),
                                 ], string='Market Place Type ', required=True,copy=False)     
     
 class VendorPlace(models.Model):
@@ -75,5 +77,6 @@ class VendorPlace(models.Model):
     market_place_type = fields.Selection([
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
+                                ('paytm', 'Paytm'),
                                 ], string='Market Place Type ', required=True, copy=False) 
         

@@ -5,3 +5,5 @@ import import_order
 import message_wiz
 import sale_report
 import import_order_amazon
+import import_order_paytm
+import sale_report_paytm
