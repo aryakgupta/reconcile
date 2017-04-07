@@ -31,6 +31,7 @@ class SellerPlaceConfig(models.Model):
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
                                 ('paytm', 'Paytm'),
+                                ('shopclues', 'Shopclues'),
                                 ], string='Market Place Type ', copy=False) 
     
     @api.multi
@@ -66,6 +67,7 @@ class MarketPlace(models.Model):
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
                                 ('paytm', 'Paytm'),
+                                ('shopclues', 'Shopclues'),
                                 ], string='Market Place Type ', required=True,copy=False)     
     
 class VendorPlace(models.Model):
@@ -78,5 +80,6 @@ class VendorPlace(models.Model):
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
                                 ('paytm', 'Paytm'),
+                                ('shopclues', 'Shopclues'),
                                 ], string='Market Place Type ', required=True, copy=False) 
         

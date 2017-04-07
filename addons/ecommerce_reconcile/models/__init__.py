@@ -5,3 +5,4 @@ import seller_config
 import seller_reconcile
 import amazon_seller_reconcile
 import paytm_seller_reconcile
+import shopclues_seller_reconcile

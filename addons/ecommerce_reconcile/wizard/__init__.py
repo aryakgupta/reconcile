@@ -7,3 +7,5 @@ import sale_report
 import import_order_amazon
 import import_order_paytm
 import sale_report_paytm
+import import_order_shopclues
+import sale_report_shopclues

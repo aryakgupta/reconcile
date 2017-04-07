@@ -34,6 +34,7 @@ class SellerSaleReport(models.TransientModel):
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
                                 ('paytm', 'Paytm'),
+                                ('shopclues', 'Shopclues'),
                                 ], string='Market Place Type ', required=True,copy=False)         
     
 

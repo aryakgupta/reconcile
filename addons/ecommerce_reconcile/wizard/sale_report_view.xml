@@ -36,7 +36,10 @@
 							</page>		
 							<page string="Paytm Reports" attrs="{'invisible': [('market_place_type', '!=','paytm')]}"  >
 								<button name="action_paytm_seller_sale_report" string="Paytm Sale Report" type="object" />
-							</page>											
+							</page>
+							<page string="Shopclues Reports" attrs="{'invisible': [('market_place_type', '!=','shopclues')]}"  >
+								<button name="action_shopclues_seller_sale_report" string="Shopclues Sale Report" type="object" />
+							</page>																			
 						</notebook>		
 					</group>			
 			       	<footer>

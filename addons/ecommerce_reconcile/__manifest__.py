@@ -19,6 +19,7 @@ Manage FK Reconcile
         'views/seller_reconcile_view.xml',
         'views/amazon_seller_reconcile_view.xml',
         'views/paytm_seller_reconcile_view.xml',
+        'views/shopcluse_seller_reconcile_view.xml',
         'wizard/import_order_views.xml',
         'wizard/message_wizard_view.xml',
         'wizard/sale_report_view.xml',

@@ -36,7 +36,14 @@
 							<page string="Paytm Bulk Import Data" attrs="{'invisible': [('market_place_type', '!=','paytm')]}"  >
 								<button name="action_upload_paytm_order" string="Upload Paytm Order" type="object" />
 								<button name="action_upload_paytm_payment" string="Upload Paytm Payment" type="object" />
-							</page>															
+							</page>		
+							
+							<!--This block is used for shopclues bulk import data    -->
+							<page string="Shopcluse Bulk Import Data" attrs="{'invisible': [('market_place_type', '!=','shopclues')]}"  >
+								<button name="action_upload_shopclues_order" string="Upload Shopclues Order" type="object" />
+								<button name="action_upload_shopclues_payment" string="Upload Shopclues Payment" type="object" />
+							</page>	
+																											
 						</notebook>		
 					</group>			
 			       	<footer>

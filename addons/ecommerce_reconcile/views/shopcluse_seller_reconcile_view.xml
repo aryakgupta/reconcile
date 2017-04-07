@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <menuitem name="Shopclues"
+            id="menu_main_shopclues_seller_place_order" parent="main_ecommerce_seller_place_config" sequence="60" />
+            
+            
+        <record id="view_shopclues_seller_place_order_tree" model="ir.ui.view">
+            <field name="name">shopclues.seller.place.order.tree</field>
+            <field name="model">shopclues.seller.place.order</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="shopclues Seller Place Order" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="order_date" />
+                    <field name="order_id"/>
+                    <field name="product_details"/>
+                    <field name="quantity"/>
+                    <field name="order_subtotal"/>
+                    <field name="invoice_value" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shopclues_seller_place_order_form" model="ir.ui.view">
+            <field name="name">shopclues.seller.place.order.form</field>
+            <field name="model">shopclues.seller.place.order</field>
+            <field name="arch" type="xml">
+                <form string="shopclues Seller Place Order" class="o_sale_order">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="order_date" />
+                            <field name="order_id" />
+                            <field name="sku" />
+                            <field name="order_status" />
+                            <field name="product_details" />
+                            <field name="buyer_name" />
+                            <field name="shipping_city" />
+                            <field name="shipping_state" /> 
+                            <field name="quantity" /> 
+                            <field name="payment_type" /> 
+                            <field name="payment_details" /> 
+                            <field name="order_subtotal" /> 
+                            <field name="collectable_amount" />                             
+                                                      
+                        </group>
+                        <group>
+                            <field name="merchant_sku" /> 
+                            <field name="shipment_id" /> 
+                            <field name="tracking_no" /> 
+                            <field name="carrier_name" /> 
+                            <field name="merchant_name" /> 
+                            <field name="merchant_type" /> 
+                            <field name="merchant_city" />   
+                            <field name="regular_selling_price" /> 
+                            <field name="total_merchnat_discount_permotions" /> 
+                            <field name="invoice_value" /> 
+                            <field name="shipping_cost" /> 
+                            <field name="weight" /> 
+                            <field name="sku_id" /> 
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_shopclues_seller_place_order_filter" model="ir.ui.view">
+            <field name="name">shopclues.seller.place.order.select</field>
+            <field name="model">shopclues.seller.place.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Shopclues Seller Place Order">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+                    <field name="sku" filter_domain="[('sku','ilike',self)]" />
+                    <field name="product_details" filter_domain="[('product_details','ilike',self)]" />
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="order_date" string="Order Date" domain="[]" context="{'group_by':'order_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_shopclues_seller_place_order" model="ir.actions.act_window">
+            <field name="name">Shopclues Seller Place Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shopclues.seller.place.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_order_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_shopclues_seller_place_order_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Seller Order details.
+                </p>
+            </field>
+        </record>
+
+
+            
+        <menuitem action="action_shopclues_seller_place_order"
+            id="menu_shopclues_seller_place_order" parent="menu_main_shopclues_seller_place_order"
+            sequence="60" />
+
+
+       <record id="view_shopclues_seller_place_payment_tree" model="ir.ui.view">
+            <field name="name">shopclues.seller.place.payment.tree</field>
+            <field name="model">shopclues.seller.place.payment</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Shopclues Seller Place Payment" >
+                    <field name="market_place_id"/>
+                    <field name="vendor_place_id"/>
+                    <field name="order_date" />
+                    <field name="order_id"/>
+                    <field name="product_id"/>
+                    <field name="product"/>
+                    <field name="order_total"/>
+                    <field name="deal_price" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_shopclues_seller_place_payment_form" model="ir.ui.view">
+            <field name="name">shopclues.seller.place.payment.form</field>
+            <field name="model">shopclues.seller.place.payment</field>
+            <field name="arch" type="xml">
+                <form string="Shopclues Seller Place Payment" class="o_sale_order">
+                <header>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="market_place_id" />
+                            <field name="vendor_place_id" />
+                            <field name="order_date" />
+                            <field name="order_id" />
+                            <field name="product_id" />
+                            <field name="merchant_reference_no" />
+                            <field name="product" />
+                            <field name="status" />
+                            <field name="billing_type" />
+                            <field name="net_payout" /> 
+                            <field name="shipping_cost" /> 
+                            <field name="selling_price" /> 
+                            <field name="merchant_Order_total" /> 
+                            <field name="remote_address_shipping" /> 
+                            <field name="order_total" />                             
+                                                      
+                        </group>
+                        <group>
+                            <field name="deal_price" /> 
+                            <field name="unit_target_payout" /> 
+                            <field name="selling_service_fee_before_tax" /> 
+                            <field name="selling_service_fee_after_tax" /> 
+                            <field name="fullfillment_service_fee_before_tax" /> 
+                            <field name="fullfillment_service_fee_after_tax" /> 
+                            <field name="total_service_fee" />   
+                            <field name="service_tax_rate" /> 
+                            <field name="tp_selling_fee" /> 
+                            <field name="weight" /> 
+                            <field name="customer_name" /> 
+                            <field name="state" /> 
+                            <field name="invoice" /> 
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_shopclues_seller_place_payment_filter" model="ir.ui.view">
+            <field name="name">shopclues.seller.place.payment.select</field>
+            <field name="model">shopclues.seller.place.payment</field>
+            <field name="arch" type="xml">
+                <search string="Search Shopclues Seller Place Payment">
+                    <field name="order_id" filter_domain="[('order_id','ilike',self)]" />
+                    <field name="product" filter_domain="[('product','ilike',self)]" />
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="market_place" string="Market Place" domain="[]" context="{'group_by':'market_place_id'}"/>
+                        <filter name="vendor_place" string="Vendor Place" domain="[]" context="{'group_by':'vendor_place_id'}"/>
+                        <filter name="order_date" string="Order Date" domain="[]" context="{'group_by':'order_date:day'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="action_shopclues_seller_place_payment" model="ir.actions.act_window">
+            <field name="name">Shopclues Seller Place Payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shopclues.seller.place.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_market_place': 1,'search_default_vendor_place': 1, 'search_default_order_date': 1}</field>
+            <field name="domain"></field>
+            <field name="search_view_id" ref="view_shopclues_seller_place_payment_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Seller Order details.
+                </p>
+            </field>
+        </record>
+
+
+            
+        <menuitem action="action_shopclues_seller_place_payment"
+            id="menu_shopclues_seller_place_payment" parent="menu_main_shopclues_seller_place_order"
+            sequence="120" />            
+            
+</odoo>

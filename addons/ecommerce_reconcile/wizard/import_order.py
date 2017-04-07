@@ -29,6 +29,7 @@ class OrderImport(models.TransientModel):
                                 ('flipkart', 'Flipkart'),
                                 ('amazon', 'Amazon'),
                                 ('paytm', 'Paytm'),
+                                ('shopclues', 'Shopclues'),
                                 ], string='Market Place Type ', required=True, copy=False)    
     
     @api.multi
@@ -44,7 +45,7 @@ class OrderImport(models.TransientModel):
         for row in data:
             items = dict(zip(fields, row))
             for key, val in items.iteritems():
-                if val in ['Null','null']:
+                if val in ['Null','null','--','n/a']:
                     items[key] = 0
             data_lines.append(items)
         return fields,data_lines
